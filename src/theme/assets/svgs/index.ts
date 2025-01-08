@@ -7,6 +7,8 @@ export const availablePaths = [
   'numberplate',
   'showrooms',
   'leftArrow',
+  'message',
+  'phone-call'
 ] as const;
 
 export { default as carRecovery } from './carrecovery.svg';
@@ -21,3 +23,7 @@ export { default as carWash } from './carWash.svg';
 export { default as boats } from './boats.svg';
 export { default as share } from './share.svg';
 export { default as heart } from './heart.svg';
+export { default as message } from './message.svg';
+export { default as phoneCall } from './phone-call.svg';
+
+

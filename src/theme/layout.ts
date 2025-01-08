@@ -4,6 +4,9 @@ export default {
   col: {
     flexDirection: 'column',
   },
+  gap10: {
+    gap: 10
+  },
   colReverse: {
     flexDirection: 'column-reverse',
   },

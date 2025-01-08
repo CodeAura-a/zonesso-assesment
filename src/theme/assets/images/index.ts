@@ -8,6 +8,7 @@ export const IMAGES = {
 };
 
 export const CARD_IMAGES = {
+  GOOGLE_MAP: require('./google-map.png'),
   TOYOTA: require('./ToyotaCard.png'),
   TOYOTA_LOGO: require('./logo/Toyota_Logo.png'),
 };
