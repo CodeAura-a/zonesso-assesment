@@ -2,16 +2,13 @@ import { useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { Linking, View } from 'react-native';
-import { LearnMoreLinks } from 'react-native/Libraries/NewAppScreen';
 
 import { useTheme } from '@/theme';
 import layout from '@/theme/layout';
 
 import {
-  GradientText,
   ZonButton,
   ZonImage,
-  ZonSvg,
   ZonText,
 } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
@@ -20,10 +17,12 @@ import { height } from '@/utils/common';
 
 import { Detail_List } from './data';
 import useStyles from './styles';
+import { LikeButton } from '@/components/atoms/Like/like';
+import { ShareButton } from '@/components/atoms/Share/share';
 
 export default function AllList() {
   const styles = useStyles();
-  const route = useRoute().params;
+  const route: any = useRoute().params;
   const { gutters, backgrounds, borders } = useTheme();
 
   const header = () => {
@@ -40,7 +39,7 @@ export default function AllList() {
       </View>
     );
   };
-  const renderItem = (item) => {
+  const renderItem = (item: any) => {
     console.log('----------------', item?.companyImage);
     return (
       <View
@@ -51,38 +50,28 @@ export default function AllList() {
           borders.rounded_8,
         ]}
       >
-        <ZonImage
-          source={{ uri: item?.image }}
-          style={{ height: height / 4, width: '100%', borderRadius: 8 }}
-          resizeMode="cover"
-        />
-        <View
-          style={[
-            layout.row,
-            layout.justifyBetween,
-            layout.absolute,
-            { zIndex: 100 },
-          ]}
-        >
-          <View style={[layout.row, gutters.gap_6, { zIndex: 100, right: 0 }]}>
-            <ZonSvg
-              name="heart"
-              size={24}
-              viewStyle={{
-                marginTop: -12,
-                backgroundColor: 'red',
+        <View style={{ position: 'relative' }}>
+          <ZonImage
+            source={{ uri: item?.image }}
+            style={{ height: height / 4, width: '100%', borderRadius: 8 }}
+            resizeMode="cover"
+          />
+          <View
+            style={[
+              layout.row,
+              layout.justifyEnd,
+              {
+                position: 'absolute',
+                top: 8,
+                right: 8,
                 zIndex: 100,
-              }}
-            />
-            <ZonSvg
-              name="share"
-              size={24}
-              viewStyle={{
-                marginTop: -12,
-                backgroundColor: 'red',
-                zIndex: 100,
-              }}
-            />
+              },
+            ]}
+          >
+            <View style={[layout.row, gutters.gap_6]}>
+              <LikeButton />
+              <ShareButton />
+            </View>
           </View>
         </View>
         <View style={[layout.row, layout.justifyBetween, gutters.marginTop_8]}>
@@ -139,13 +128,13 @@ export default function AllList() {
           </View>
 
           <View
-            style={[layout.row, layout.justifyBetween, gutters.marginTop_16]}
+            style={[layout.row, layout.justifyBetween, gutters.marginTop_16, layout.gap10]}
           >
             <ZonButton
               onPress={() => {
                 console.log(';LearnMoreLinks;klk;k;');
               }}
-              style={{ width: '48%' }}
+              style={{ width: '100%' }}
               variant="outlined"
               label="Chat"
             />
@@ -153,7 +142,7 @@ export default function AllList() {
               onPress={() => {
                 Linking.openURL(`tel:${item?.phone}`);
               }}
-              style={{ width: '48%' }}
+              style={{ width: '100%' }}
               label="Call"
             />
           </View>
@@ -184,3 +173,4 @@ export default function AllList() {
     </SafeScreen>
   );
 }
+
