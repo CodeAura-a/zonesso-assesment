@@ -21,3 +21,6 @@ export { default as carWash } from './carWash.svg';
 export { default as boats } from './boats.svg';
 export { default as share } from './share.svg';
 export { default as heart } from './heart.svg';
+export { default as calendar } from './calendar.svg';
+export { default as black_ring } from './black-ring.svg';
+export { default as radio_button } from './radio_button.svg';

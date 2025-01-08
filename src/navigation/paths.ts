@@ -4,4 +4,5 @@ export const enum Paths {
   bottomTab = 'bottomTab',
   CarWash = 'carWash',
   AllList = 'allList',
+  Form = 'form',
 }

@@ -16,6 +16,7 @@ type Props = PropsWithChildren<
     isError?: boolean;
     onResetError?: () => void;
     backButton?: boolean;
+    noHeader?: boolean;
   } & Omit<SafeAreaViewProps, 'mode'>
 >;
 
@@ -25,6 +26,7 @@ function SafeScreen({
   onResetError = undefined,
   backButton = true,
   style,
+  noHeader = false,
   ...props
 }: Props) {
   const navigation = useNavigation();
@@ -45,22 +47,23 @@ function SafeScreen({
           <DefaultError onReset={onResetError} />
         ) : (
           <View style={[layout.flex_1]}>
-            <View style={[{ height: 24 }]}>
-              {backButton ? (
-                <Pressable
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                  style={[gutters.padding_2, gutters.marginLeft_16]}
-                >
-                  <ZonSvg
-                    name="leftArrow"
-                    viewStyle={{ width: 18, height: 18 }}
-                  />
-                </Pressable>
-              ) : null}
-            </View>
-
+            {noHeader ? null : (
+              <View style={[{ height: 24 }]}>
+                {backButton ? (
+                  <Pressable
+                    onPress={() => {
+                      navigation.goBack();
+                    }}
+                    style={[gutters.padding_2, gutters.marginLeft_16]}
+                  >
+                    <ZonSvg
+                      name="leftArrow"
+                      viewStyle={{ width: 18, height: 18 }}
+                    />
+                  </Pressable>
+                ) : null}
+              </View>
+            )}
             {children}
           </View>
         )}

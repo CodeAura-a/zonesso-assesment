@@ -8,6 +8,7 @@ import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
 
 import { AllList, CarWash, Startup } from '@/screens';
+import Form from '@/screens/Home/form/form';
 
 import BottomTabNavigator from './bottomTab/bottomTabs';
 
@@ -22,12 +23,13 @@ function ApplicationNavigator() {
         <Stack.Navigator
           key={variant}
           screenOptions={{ headerShown: false }}
-          initialRouteName={Paths.AllList}
+          initialRouteName={Paths.Form}
         >
           <Stack.Screen component={BottomTabNavigator} name={Paths.bottomTab} />
           <Stack.Screen component={Startup} name={Paths.Startup} />
           <Stack.Screen component={CarWash} name={Paths.CarWash} />
           <Stack.Screen component={AllList} name={Paths.AllList} />
+          <Stack.Screen component={Form} name={Paths.Form} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

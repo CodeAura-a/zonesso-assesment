@@ -5,7 +5,13 @@ import type { ComponentTheme } from '@/theme/types/theme';
 interface AllStyle
   extends Record<string, AllStyle | ImageStyle | TextStyle | ViewStyle> {}
 
-export default ({ backgrounds, fonts, layout, borders }: ComponentTheme) => {
+export default ({
+  backgrounds,
+  fonts,
+  layout,
+  borders,
+  gutters,
+}: ComponentTheme) => {
   return {
     buttonCircle: {
       ...layout.justifyCenter,
@@ -46,6 +52,16 @@ export default ({ backgrounds, fonts, layout, borders }: ComponentTheme) => {
       ...layout.itemsCenter,
       height: 32,
       borderRadius: 8,
+    },
+    input: {
+      borderWidth: 1,
+      ...borders.rounded_8,
+      ...fonts.lineHeight_18,
+      ...fonts.size_15,
+      ...fonts.fontFamily_Regular,
+      ...gutters.paddingLeft_16,
+      minHeight: 40,
+      textAlignVertical: 'center',
     },
   } as const satisfies AllStyle;
 };
