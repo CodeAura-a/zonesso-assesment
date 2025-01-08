@@ -10,9 +10,9 @@ const useStyles = () => {
   const styles = {
     container: {},
     headerText: {
-      ...fonts.size_16,
-      ...fonts.fontFamily_Bold,
-      ...fonts.lineHeight_34,
+      // ...fonts.size_16,
+      // ...fonts.fontFamily_Bold,
+      // ...fonts.lineHeight_34,
       ...gutters.marginLeft_16,
     },
     list: { ...gutters.paddingBottom_16 },

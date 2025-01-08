@@ -3,8 +3,10 @@ export const Detail_List = [
     id: '1',
     title: 'Yalla Fix Auto Repair',
     image: 'https://images.pexels.com/photos/3807279/pexels-photo-3807279.jpeg',
-    companyImage: 'https://www.vecteezy.com/vector-art/7688848-car-wash-logo',
+    companyImage:
+      'https://images.pexels.com/photos/3807278/pexels-photo-3807278.jpeg',
     distance: '5 km',
+    location: 'Deira, Dubai, United Arab Emirates',
     tags: [
       { label: 'Popular', color: '#FF5733' },
       { label: 'Near You', color: '#FFC300' },
@@ -17,6 +19,9 @@ export const Detail_List = [
     title: 'ServiceDrive',
     image: 'https://images.pexels.com/photos/4489735/pexels-photo-4489735.jpeg',
     distance: '8 km',
+    companyImage:
+      'https://images.pexels.com/photos/3807278/pexels-photo-3807278.jpeg',
+    location: 'Deira, Dubai, United Arab Emirates',
     tags: [
       { label: 'Featured', color: '#2ECC71' },
       { label: 'Top Rated', color: '#3498DB' },

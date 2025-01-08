@@ -41,5 +41,11 @@ export default ({ backgrounds, fonts, layout, borders }: ComponentTheme) => {
       height: 250,
       width: 250,
     },
+    button: {
+      ...layout.justifyCenter,
+      ...layout.itemsCenter,
+      height: 32,
+      borderRadius: 8,
+    },
   } as const satisfies AllStyle;
 };
