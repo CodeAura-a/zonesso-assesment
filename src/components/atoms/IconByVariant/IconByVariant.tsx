@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import type { SvgProps } from 'react-native-svg';
+import type { availablePaths } from '@/theme/assets/svgs';
 
 import { useCallback, useEffect, useState } from 'react';
 import { z } from 'zod';
@@ -8,7 +9,7 @@ import { useTheme } from '@/theme';
 import getAssetsContext from '@/theme/assets/getAssetsContext';
 
 type Props = {
-  path: string;
+  path: (typeof availablePaths)[number];
 } & SvgProps;
 
 const icons = getAssetsContext('icons');

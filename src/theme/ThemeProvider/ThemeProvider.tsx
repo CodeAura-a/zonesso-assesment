@@ -106,7 +106,6 @@ function ThemeProvider({ children = false, storage }: Props) {
   const navigationTheme = useMemo(() => {
     return {
       colors: fullConfig.navigationColors,
-      dark: variant === 'dark',
     };
   }, [variant, fullConfig.navigationColors]);
 

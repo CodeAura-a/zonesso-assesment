@@ -1,5 +1,4 @@
 import { useErrorBoundary } from 'react-error-boundary';
-import { useTranslation } from 'react-i18next';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useTheme } from '@/theme';
@@ -12,7 +11,7 @@ type Props = {
 
 function DefaultErrorScreen({ onReset = undefined }: Props) {
   const { colors, fonts, gutters, layout } = useTheme();
-  const { t } = useTranslation();
+
   const { resetBoundary } = useErrorBoundary();
 
   return (
@@ -25,17 +24,17 @@ function DefaultErrorScreen({ onReset = undefined }: Props) {
         gutters.padding_16,
       ]}
     >
-      <IconByVariant
+      {/* <IconByVariant
         height={42}
         path="fire"
         stroke={colors.red500}
         width={42}
-      />
+      /> */}
       <Text style={[fonts.gray800, fonts.bold, fonts.size_16]}>
-        {t('error_boundary.title')}
+        Something Went Wrong
       </Text>
       <Text style={[fonts.gray800, fonts.size_12, fonts.alignCenter]}>
-        {t('error_boundary.description')}
+        An unexpected error occurred. Please try again later.
       </Text>
 
       {onReset && (
@@ -45,9 +44,7 @@ function DefaultErrorScreen({ onReset = undefined }: Props) {
             onReset?.();
           }}
         >
-          <Text style={[fonts.gray800, fonts.size_16]}>
-            {t('error_boundary.cta')}
-          </Text>
+          <Text style={[fonts.gray800, fonts.size_16]}>Try Again</Text>
         </TouchableOpacity>
       )}
     </View>

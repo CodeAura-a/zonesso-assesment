@@ -20,6 +20,7 @@ export type FulfilledThemeConfiguration = {
   fonts: {
     readonly colors: Record<string, string>;
     sizes: readonly number[];
+    lineHeight: readonly number[];
   };
   gutters: readonly number[];
   readonly navigationColors: NavigationTheme['colors'];

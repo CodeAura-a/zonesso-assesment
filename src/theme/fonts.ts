@@ -1,6 +1,6 @@
 import type { TextStyle } from 'react-native';
 import type { UnionConfiguration } from '@/theme/types/config';
-import type { FontColors, FontSizes } from '@/theme/types/fonts';
+import type { FontColors, FontSizes, LineHeights } from '@/theme/types/fonts';
 
 import { config } from '@/theme/_config';
 
@@ -27,17 +27,48 @@ export const generateFontSizes = () => {
   }, {} as FontSizes);
 };
 
+export const generateFontLineHeights = () => {
+  return config.fonts.lineHeight.reduce((acc, lineHeight, index) => {
+    return Object.assign(acc, {
+      [`lineHeight_${config.fonts.sizes[index]}`]: {
+        lineHeight: lineHeight,
+      },
+    });
+  }, {} as LineHeights);
+};
+
 export const staticFontStyles = {
-  alignCenter: {
-    textAlign: 'center',
-  },
   bold: {
     fontWeight: 'bold',
+  },
+  uppercase: {
+    textTransform: 'uppercase',
   },
   capitalize: {
     textTransform: 'capitalize',
   },
-  uppercase: {
-    textTransform: 'uppercase',
+  underline: {
+    textDecorationLine: 'underline',
+  },
+  alignCenter: {
+    textAlign: 'center',
+  },
+  fontFamily_Regular: {
+    fontFamily: 'Nunito-Regular',
+  },
+  fontFamily_Bold: {
+    fontFamily: 'Nunito-Bold',
+  },
+  fontFamily_Medium: {
+    fontFamily: 'Nunito-Medium',
+  },
+  fontFamily_ExtBold: {
+    fontFamily: 'Nunito-ExtraBold',
+  },
+  fontFamily_black: {
+    fontFamily: 'Nunito-Black',
+  },
+  fontFamily_semiBold: {
+    fontFamily: 'Nunito-SemiBold',
   },
 } as const satisfies Record<string, TextStyle>;

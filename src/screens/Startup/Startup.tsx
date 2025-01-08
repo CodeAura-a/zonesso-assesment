@@ -2,7 +2,6 @@ import type { RootScreenProps } from '@/navigation/types';
 
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Text, View } from 'react-native';
 
 import { useTheme } from '@/theme';
@@ -13,7 +12,6 @@ import { SafeScreen } from '@/components/templates';
 
 function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
   const { fonts, gutters, layout } = useTheme();
-  const { t } = useTranslation();
 
   const { isError, isFetching, isSuccess } = useQuery({
     queryFn: () => {
@@ -26,7 +24,7 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
     if (isSuccess) {
       navigation.reset({
         index: 0,
-        routes: [{ name: Paths.Example }],
+        routes: [{ name: Paths.bottomTab }],
       });
     }
   }, [isSuccess, navigation]);
@@ -50,7 +48,7 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
           <ActivityIndicator size="large" style={[gutters.marginVertical_24]} />
         )}
         {isError && (
-          <Text style={[fonts.size_16, fonts.red500]}>{t('common_error')}</Text>
+          <Text style={[fonts.size_16, fonts.red500]}>common_error</Text>
         )}
       </View>
     </SafeScreen>

@@ -10,13 +10,19 @@ const colorsLight = {
   gray100: '#DFDFDF',
   gray200: '#A1A1A1',
   gray400: '#4D4D4D',
+  gray900: '#101828',
+  gray600: '#475467',
+  gray500: '#DCDCDC',
   gray50: '#EFEFEF',
-  gray800: '#303030',
+  gray800: '#1D2939',
   purple100: '#E1E1EF',
   purple50: '#1B1A23',
   purple500: '#44427D',
-  red500: '#C13333',
+  red500: '#F04438',
   skeleton: '#A1A1A1',
+  white: '#FFFFFF',
+  black: '#000000',
+  txt: '#101828',
 } as const;
 
 const colorsDark = {
@@ -28,23 +34,33 @@ const colorsDark = {
   purple100: '#252732',
   purple50: '#1B1A23',
   purple500: '#A6A4F0',
-  red500: '#C13333',
+  red500: '#F04438',
   skeleton: '#303030',
 } as const;
 
-const sizes = [12, 16, 24, 32, 40, 80] as const;
+const sizes = [
+  0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80,
+] as const;
+
+const fontSize = [
+  8, 10, 12, 14, 15, 16, 18, 20, 22, 24, 28, 32, 36, 40,
+] as const;
+const lineHeight = [
+  12, 14, 16, 17, 18, 19, 22, 24, 29, 34, 39, 44, 48,
+] as const;
 
 export const config = {
   backgrounds: colorsLight,
   borders: {
     colors: colorsLight,
-    radius: [4, 16],
-    widths: [1, 2],
+    radius: sizes,
+    widths: sizes,
   },
   colors: colorsLight,
   fonts: {
     colors: colorsLight,
-    sizes,
+    sizes: fontSize,
+    lineHeight,
   },
   gutters: sizes,
   navigationColors: {

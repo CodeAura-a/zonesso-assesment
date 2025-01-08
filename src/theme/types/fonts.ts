@@ -21,4 +21,15 @@ export type FontColors = {
     : never;
 };
 
-export type Fonts = FontColors & FontSizes & typeof staticFontStyles;
+type LineHeightKeys =
+  `lineHeight_${ArrayValue<typeof config.fonts.lineHeight>}`;
+export type LineHeights = {
+  [key in LineHeightKeys]: {
+    lineHeight: ToNumber<RemoveBeforeSeparator<key>>;
+  };
+};
+
+export type Fonts = FontColors &
+  FontSizes &
+  LineHeights &
+  typeof staticFontStyles;
