@@ -30,6 +30,7 @@ export const LikeButton: React.FC<IconButtonProps> = ({
                     alignItems: 'center',
                     justifyContent: 'center',
                     opacity: pressed ? 0.8 : 1,
+                    zIndex: 50,
                 },
                 style,
             ]}

@@ -7,6 +7,7 @@ export type RootStackParamList = {
   [Paths.bottomTab]: undefined;
   [Paths.CarWash]: undefined;
   [Paths.AllList]: { title: string };
+  [Paths.CompanyProfile]: undefined;
 };
 
 export type RootScreenProps<

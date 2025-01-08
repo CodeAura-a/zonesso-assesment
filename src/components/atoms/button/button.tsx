@@ -10,12 +10,13 @@ import { ZonSvg, ZonText } from '../index';
 import useStyles from './styles';
 
 type ButtonProps = {
-  variant?: 'primary' | 'outlined';
+  variant?: 'primary' | 'outlined' | 'ghost';
   icon?: keyof typeof svgs;
+  iconStyle?: ViewStyle,
   loading?: boolean;
   disabled?: boolean;
   onPress: () => void;
-  style?: ViewStyle;
+  style?: ViewStyle | any;
   label?: string;
   textVariant?: fontsTitle;
   fontFamily?: 'medium' | 'bold';
@@ -31,20 +32,33 @@ const GenericButton: React.FC<ButtonProps> = ({
   label,
   style,
   textVariant = 'button',
+  iconStyle
 }) => {
   const styles = useStyles();
   const { colors, components, fonts, borders, backgrounds } = useTheme();
 
   const getButtonStyle = (pressed: boolean): (ViewStyle | undefined)[] => {
     const baseStyle = [components.button];
-    const variantStyle =
-      variant === 'outlined'
-        ? [
-            borders.w_1,
-            pressed ? borders.gray100 : borders.danger500,
-            pressed ? backgrounds.gray100 : backgrounds.danger100,
-          ]
-        : [components.primaryBackground];
+    let variantStyle: ViewStyle[] = [];
+
+    switch (variant) {
+      case 'outlined':
+        variantStyle = [
+          borders.w_1,
+          pressed ? borders.gray100 : borders.danger500,
+          pressed ? backgrounds.gray100 : backgrounds.danger100,
+        ];
+        break;
+      case 'ghost':
+        variantStyle = [
+          pressed ? backgrounds.danger100 : {},
+          { backgroundColor: "transparent" },
+        ];
+        break;
+      default: // primary
+        variantStyle = [components.primaryBackground];
+    }
+
     const disabledStyle =
       variant === 'primary' ? [backgrounds.gray100] : [borders.gray100];
 
@@ -66,11 +80,13 @@ const GenericButton: React.FC<ButtonProps> = ({
       return fonts.gray50;
     }
 
-    return variant === 'primary'
-      ? fonts.white
-      : pressed
-        ? fonts.white
-        : fonts.danger500;
+    switch (variant) {
+      case 'primary':
+        return fonts.white;
+      case 'ghost':
+      case 'outlined':
+        return pressed ? fonts.white : fonts.danger500;
+    }
   };
 
   const renderContent = (pressed: boolean) => (
@@ -82,7 +98,7 @@ const GenericButton: React.FC<ButtonProps> = ({
         />
       ) : (
         <>
-          {icon && <ZonSvg name={icon} viewStyle={styles.iconView} />}
+            {icon && <ZonSvg name={icon} viewStyle={[styles.iconView, iconStyle]} />}
           <ZonText
             variant={textVariant}
             fontFamily={fontFamily}
@@ -122,3 +138,4 @@ const GenericButton: React.FC<ButtonProps> = ({
 };
 
 export default GenericButton;
+

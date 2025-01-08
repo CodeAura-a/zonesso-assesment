@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { Linking, View } from 'react-native';
+import { Linking, Pressable, View } from 'react-native';
 
 import { useTheme } from '@/theme';
 import layout from '@/theme/layout';
@@ -19,12 +19,16 @@ import { Detail_List } from './data';
 import useStyles from './styles';
 import { LikeButton } from '@/components/atoms/Like/like';
 import { ShareButton } from '@/components/atoms/Share/share';
+import { Paths } from '@/navigation/paths';
 
-export default function AllList() {
+export default function AllList({ navigation }: any) {
   const styles = useStyles();
   const route: any = useRoute().params;
   const { gutters, backgrounds, borders } = useTheme();
 
+  const handleCompanyProfile = () => {
+    navigation.navigate(Paths.CompanyProfile)
+  }
   const header = () => {
     return (
       <View style={[layout.row]}>
@@ -39,8 +43,8 @@ export default function AllList() {
       </View>
     );
   };
+
   const renderItem = (item: any) => {
-    console.log('----------------', item?.companyImage);
     return (
       <View
         style={[
@@ -51,11 +55,13 @@ export default function AllList() {
         ]}
       >
         <View style={{ position: 'relative' }}>
-          <ZonImage
-            source={{ uri: item?.image }}
-            style={{ height: height / 4, width: '100%', borderRadius: 8 }}
-            resizeMode="cover"
-          />
+          <Pressable onPress={handleCompanyProfile}>
+            <ZonImage
+              source={{ uri: item?.image }}
+              style={{ height: height / 4, width: '100%', borderRadius: 8 }}
+              resizeMode="cover"
+            />
+          </Pressable>
           <View
             style={[
               layout.row,
@@ -74,79 +80,81 @@ export default function AllList() {
             </View>
           </View>
         </View>
-        <View style={[layout.row, layout.justifyBetween, gutters.marginTop_8]}>
-          <ZonText variant="black2">AED 150</ZonText>
-          <ZonText variant="sub" color="gray600">
-            {item?.distance} away
-          </ZonText>
-        </View>
+        <Pressable onPress={handleCompanyProfile}>
+          <View style={[layout.row, layout.justifyBetween, gutters.marginTop_8]}>
+            <ZonText variant="black2">AED 150</ZonText>
+            <ZonText variant="sub" color="gray600">
+              {item?.distance} away
+            </ZonText>
+          </View>
 
-        <View>
-          <ZonText style={styles.cardTitle}>{item?.title}</ZonText>
-          <ZonText variant="sub" color="gray600" style={[gutters.marginTop_6]}>
-            {item?.description}
-          </ZonText>
+          <View>
+            <ZonText style={styles.cardTitle}>{item?.title}</ZonText>
+            <ZonText variant="sub" color="gray600" style={[gutters.marginTop_6]}>
+              {item?.description}
+            </ZonText>
 
-          <View style={[layout.row, gutters.marginTop_14]}>
-            <ZonImage
-              source={{ uri: item?.companyImage }}
-              style={[
-                { height: 48, width: 48 },
-                gutters.marginRight_12,
-                borders.rounded_4,
-              ]}
-              resizeMode="cover"
-            />
-            <View>
-              <View style={[layout.row]}>
-                <ZonText variant="sub" fontFamily="bold" color="gray600">
-                  Location:{' '}
-                </ZonText>
-                <ZonText variant="sub" fontFamily="medium" color="gray600">
-                  {item?.location}
-                </ZonText>
-              </View>
+            <View style={[layout.row, gutters.marginTop_14]}>
+              <ZonImage
+                source={{ uri: item?.companyImage }}
+                style={[
+                  { height: 48, width: 48 },
+                  gutters.marginRight_12,
+                  borders.rounded_4,
+                ]}
+                resizeMode="cover"
+              />
+              <View>
+                <View style={[layout.row]}>
+                  <ZonText variant="sub" fontFamily="bold" color="gray600">
+                    Location:{' '}
+                  </ZonText>
+                  <ZonText variant="sub" fontFamily="medium" color="gray600">
+                    {item?.location}
+                  </ZonText>
+                </View>
 
-              <View style={[layout.row]}>
-                <ZonText variant="sub" fontFamily="bold" color="gray600">
-                  Posted on:
-                </ZonText>
-                <ZonText variant="sub" fontFamily="medium" color="gray600">
-                  {item?.postedDate}
-                </ZonText>
-              </View>
+                <View style={[layout.row]}>
+                  <ZonText variant="sub" fontFamily="bold" color="gray600">
+                    Posted on:
+                  </ZonText>
+                  <ZonText variant="sub" fontFamily="medium" color="gray600">
+                    {item?.postedDate}
+                  </ZonText>
+                </View>
 
-              <View style={[layout.row]}>
-                <ZonText variant="sub" fontFamily="bold" color="gray600">
-                  Posted by:{' '}
-                </ZonText>
-                <ZonText variant="sub" fontFamily="medium" color="gray600">
-                  {item?.postedBy}
-                </ZonText>
+                <View style={[layout.row]}>
+                  <ZonText variant="sub" fontFamily="bold" color="gray600">
+                    Posted by:{' '}
+                  </ZonText>
+                  <ZonText variant="sub" fontFamily="medium" color="gray600">
+                    {item?.postedBy}
+                  </ZonText>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View
-            style={[layout.row, layout.justifyBetween, gutters.marginTop_16, layout.gap10]}
-          >
-            <ZonButton
-              onPress={() => {
-                console.log(';LearnMoreLinks;klk;k;');
-              }}
-              style={{ width: '100%' }}
-              variant="outlined"
-              label="Chat"
-            />
-            <ZonButton
-              onPress={() => {
-                Linking.openURL(`tel:${item?.phone}`);
-              }}
-              style={{ width: '100%' }}
-              label="Call"
-            />
+            <View
+              style={[layout.row, layout.justifyBetween, gutters.marginTop_16, layout.gap10]}
+            >
+              <ZonButton
+                onPress={() => {
+                  console.log(';LearnMoreLinks;klk;k;');
+                }}
+                style={{ width: '100%' }}
+                variant="outlined"
+                label="Chat"
+              />
+              <ZonButton
+                onPress={() => {
+                  Linking.openURL(`tel:${item?.phone}`);
+                }}
+                style={{ width: '100%' }}
+                label="Call"
+              />
+            </View>
           </View>
-        </View>
+        </Pressable>
       </View>
     );
   };

@@ -6,8 +6,6 @@ interface IconButtonProps {
     size?: number;
     color?: string;
     backgroundColor?: string;
-    onPress?: () => void;
-    onShare?: () => void;
     style?: ViewStyle;
     isActive?: boolean;
 }
@@ -16,8 +14,6 @@ export const ShareButton: React.FC<IconButtonProps> = ({
     size = 20,
     color = 'black',
     backgroundColor = 'black',
-    onPress,
-    onShare,
     style,
     isActive = false,
 }) => {
@@ -36,6 +32,7 @@ export const ShareButton: React.FC<IconButtonProps> = ({
                     alignItems: 'center',
                     justifyContent: 'center',
                     opacity: pressed ? 0.8 : 1,
+                    zIndex: 50,
                 },
                 style,
             ]}
