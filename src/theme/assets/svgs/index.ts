@@ -8,7 +8,7 @@ export const availablePaths = [
   'showrooms',
   'leftArrow',
   'message',
-  'phone-call'
+  'phone-call',
 ] as const;
 
 export { default as carRecovery } from './carrecovery.svg';
@@ -26,4 +26,6 @@ export { default as heart } from './heart.svg';
 export { default as message } from './message.svg';
 export { default as phoneCall } from './phone-call.svg';
 
-
+export { default as calendar } from './calendar.svg';
+export { default as black_ring } from './black-ring.svg';
+export { default as radio_button } from './radio_button.svg';

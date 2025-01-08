@@ -49,3 +49,21 @@ const isValueEmpty = (value: any) =>
   value === undefined ||
   value === '' ||
   (Array.isArray(value) && value.length === 0);
+
+export const handleChangeText = <
+  T extends Record<string, any>,
+  K extends Extract<keyof T, string | number>, // Ensure K is constrained to string or number keys
+>(
+  setState: React.Dispatch<React.SetStateAction<T>>,
+  setError: React.Dispatch<
+    React.SetStateAction<Partial<Record<`${K}Error`, boolean>>>
+  >,
+  field: K,
+  value: T[K],
+) => {
+  setState((prevState) => ({ ...prevState, [field]: value }));
+  setError((prevErrors) => ({
+    ...prevErrors,
+    [`${field}Error` as `${K}Error`]: false, // Ensure field is converted to string explicitly
+  }));
+};

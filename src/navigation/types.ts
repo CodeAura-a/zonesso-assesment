@@ -8,6 +8,7 @@ export type RootStackParamList = {
   [Paths.CarWash]: undefined;
   [Paths.AllList]: { title: string };
   [Paths.CompanyProfile]: undefined;
+  [Paths.Form]: { image: string; title: string; description: string };
 };
 
 export type RootScreenProps<

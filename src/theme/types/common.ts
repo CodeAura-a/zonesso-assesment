@@ -43,3 +43,8 @@ export type HasProperty<
         >[KeyPath];
       }
     : { readonly [_ in KeyPath]: never };
+
+// Define errors for form fields based on their keys
+export type FormErrors<T extends Record<string, any>> = Partial<{
+  [K in keyof T as `${K}Error`]: boolean;
+}>;
