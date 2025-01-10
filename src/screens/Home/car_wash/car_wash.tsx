@@ -8,12 +8,16 @@ import { RootStackParamList } from '@/navigation/types';
 import { SliderList } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
 
-import { LIST_DATA } from '@/utils/data';
+import {
+  ABU_DHABI_LIST_DATA,
+  LIST_DATA,
+  SHARJAH_LIST_DATA,
+} from '@/utils/data';
 
 const sliderData = [
   { title: 'Dubai', data: LIST_DATA },
-  { title: 'Abu Dhabi', data: LIST_DATA },
-  { title: 'Sharjah', data: LIST_DATA },
+  { title: 'Abu Dhabi', data: ABU_DHABI_LIST_DATA },
+  { title: 'Sharjah', data: SHARJAH_LIST_DATA },
   { title: 'Al Ain', data: LIST_DATA },
   { title: 'Ajman', data: LIST_DATA },
   { title: 'Umm Al Quwain', data: LIST_DATA },
@@ -24,7 +28,7 @@ const sliderData = [
 export default function CarWash() {
   const navigation = useNavigation<RootStackParamList>();
   return (
-    <SafeScreen>
+    <SafeScreen heading="Car wash and details" search filter>
       <FlashList
         data={[1]}
         renderItem={() => (

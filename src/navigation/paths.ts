@@ -6,4 +6,5 @@ export const enum Paths {
   AllList = 'allList',
   CompanyProfile = 'companyProfile',
   Form = 'form',
+  Payment = 'payment',
 }

@@ -1,25 +1,22 @@
 import { useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import React from 'react';
+import React, { useState } from 'react';
 import { Linking, Pressable, View } from 'react-native';
 
 import { useTheme } from '@/theme';
+import { CARD_IMAGES } from '@/theme/assets/images';
 import layout from '@/theme/layout';
+import { Paths } from '@/navigation/paths';
 
-import {
-  ZonButton,
-  ZonImage,
-  ZonText,
-} from '@/components/atoms';
+import { ZonButton, ZonImage, ZonText } from '@/components/atoms';
+import { LikeButton } from '@/components/atoms/Like/like';
+import { ShareButton } from '@/components/atoms/Share/share';
 import { SafeScreen } from '@/components/templates';
 
 import { height } from '@/utils/common';
 
 import { Detail_List } from './data';
 import useStyles from './styles';
-import { LikeButton } from '@/components/atoms/Like/like';
-import { ShareButton } from '@/components/atoms/Share/share';
-import { Paths } from '@/navigation/paths';
 
 export default function AllList({ navigation }: any) {
   const styles = useStyles();
@@ -27,8 +24,8 @@ export default function AllList({ navigation }: any) {
   const { gutters, backgrounds, borders } = useTheme();
 
   const handleCompanyProfile = () => {
-    navigation.navigate(Paths.CompanyProfile)
-  }
+    navigation.navigate(Paths.CompanyProfile);
+  };
   const header = () => {
     return (
       <View style={[layout.row]}>
@@ -37,14 +34,24 @@ export default function AllList({ navigation }: any) {
         </ZonText>
         <ZonText variant="h1" color="danger500">
           {' '}
-          200
+          200{' '}
         </ZonText>
         <ZonText variant="h1">{route?.title}</ZonText>
       </View>
     );
   };
-
+  const [selected, setSelected] = useState<string[]>([]);
   const renderItem = (item: any) => {
+    const toggleSelection = (id: string) => {
+      setSelected(
+        (prevSelected) =>
+          prevSelected.includes(id)
+            ? prevSelected.filter((selectedId) => selectedId !== id) // Remove ID
+            : [...prevSelected, id], // Add ID
+      );
+      console.log('Updated selected:', selected);
+    };
+
     return (
       <View
         style={[
@@ -75,13 +82,18 @@ export default function AllList({ navigation }: any) {
             ]}
           >
             <View style={[layout.row, gutters.gap_6]}>
-              <LikeButton />
+              <LikeButton
+                isActive={selected.includes(item?.id)}
+                onPress={() => toggleSelection(item?.id)}
+              />
               <ShareButton />
             </View>
           </View>
         </View>
         <Pressable onPress={handleCompanyProfile}>
-          <View style={[layout.row, layout.justifyBetween, gutters.marginTop_8]}>
+          <View
+            style={[layout.row, layout.justifyBetween, gutters.marginTop_8]}
+          >
             <ZonText variant="black2">AED 150</ZonText>
             <ZonText variant="sub" color="gray600">
               {item?.distance} away
@@ -90,13 +102,17 @@ export default function AllList({ navigation }: any) {
 
           <View>
             <ZonText style={styles.cardTitle}>{item?.title}</ZonText>
-            <ZonText variant="sub" color="gray600" style={[gutters.marginTop_6]}>
+            <ZonText
+              variant="sub"
+              color="gray600"
+              style={[gutters.marginTop_6]}
+            >
               {item?.description}
             </ZonText>
 
             <View style={[layout.row, gutters.marginTop_14]}>
               <ZonImage
-                source={{ uri: item?.companyImage }}
+                source={CARD_IMAGES.TOYOTA_LOGO}
                 style={[
                   { height: 48, width: 48 },
                   gutters.marginRight_12,
@@ -128,18 +144,25 @@ export default function AllList({ navigation }: any) {
                     Posted by:{' '}
                   </ZonText>
                   <ZonText variant="sub" fontFamily="medium" color="gray600">
-                    {item?.postedBy}
+                    A Car Wash & Detailing
                   </ZonText>
                 </View>
               </View>
             </View>
 
             <View
-              style={[layout.row, layout.justifyBetween, gutters.marginTop_16, layout.gap10]}
+              style={[
+                layout.row,
+                layout.justifyBetween,
+                gutters.marginTop_16,
+                layout.gap10,
+              ]}
             >
               <ZonButton
                 onPress={() => {
-                  console.log(';LearnMoreLinks;klk;k;');
+                  navigation.navigate(Paths.bottomTab, {
+                    screen: 'Chat',
+                  });
                 }}
                 style={{ width: '100%' }}
                 variant="outlined"
@@ -160,7 +183,7 @@ export default function AllList({ navigation }: any) {
   };
 
   return (
-    <SafeScreen>
+    <SafeScreen location search filter heart>
       <FlashList
         ListHeaderComponent={header}
         data={Detail_List}
@@ -181,4 +204,3 @@ export default function AllList({ navigation }: any) {
     </SafeScreen>
   );
 }
-

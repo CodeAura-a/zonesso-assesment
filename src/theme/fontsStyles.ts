@@ -14,4 +14,6 @@ export const fontVariants: Record<fontsTitle, FontVariant> = {
   button: [fonts.size_14, fonts.lineHeight_34, fonts.fontFamily_ExtBold],
   h1: [fonts.size_16, fonts.lineHeight_39, fonts.fontFamily_Bold],
   sub3: [fonts.size_10, fonts.lineHeight_14, fonts.fontFamily_Medium],
+  small: [fonts.size_10, fonts.lineHeight_14, fonts.fontFamily_Medium],
+  large: [fonts.size_24, fonts.lineHeight_39, fonts.fontFamily_Bold],
 };

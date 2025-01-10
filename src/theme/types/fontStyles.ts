@@ -9,6 +9,8 @@ export type fontsTitle =
   | 'black2'
   | 'button'
   | 'h1'
-  | 'sub3';
+  | 'sub3'
+  | 'small'
+  | 'large';
 
 export type FontVariant = TextStyle[];

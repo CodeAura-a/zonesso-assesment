@@ -25,6 +25,14 @@ export { default as share } from './share.svg';
 export { default as heart } from './heart.svg';
 export { default as message } from './message.svg';
 export { default as phoneCall } from './phone-call.svg';
+export { default as close } from './ic_close_blue.svg';
+export { default as gray_location } from './gray_Location.svg';
+export { default as search } from './Search.svg';
+export { default as Filter } from './Filter.svg';
+export { default as gray_heart } from './grey-heart.svg';
+export { default as red_location } from './red_location.svg';
+export { default as arrow_down } from './arrow_down.svg';
+export { default as red_heart } from './red-heart.svg';
 
 export { default as calendar } from './calendar.svg';
 export { default as black_ring } from './black-ring.svg';

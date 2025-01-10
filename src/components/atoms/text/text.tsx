@@ -9,7 +9,7 @@ import { fontsTitle } from '@/theme/types/fontStyles';
 interface TextComponentProps extends TextProps {
   variant?: fontsTitle; // Variant prop can be 'listHeader', 'sub', 'black', sub2 'black2', 'button', 'h1',
   color?: keyof typeof config.fonts.colors;
-  fontFamily?: 'regular' | 'medium' | 'bold' | 'outfit_medium';
+  fontFamily?: 'regular' | 'medium' | 'bold' | 'semi_bold';
 }
 
 const TextComponent: React.FC<TextComponentProps> = ({
@@ -31,9 +31,11 @@ const TextComponent: React.FC<TextComponentProps> = ({
       ? fonts.fontFamily_Regular
       : fontFamily === 'medium'
         ? fonts.fontFamily_Medium
-        : fontFamily === 'bold'
-          ? fonts.fontFamily_Bold
-          : {};
+        : fontFamily === 'semi_bold'
+          ? fonts.fontFamily_semiBold
+          : fontFamily === 'bold'
+            ? fonts.fontFamily_Bold
+            : {};
 
   return (
     <Text

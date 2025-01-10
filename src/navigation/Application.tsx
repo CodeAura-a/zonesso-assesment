@@ -7,7 +7,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
 
-import { AllList, CarWash, CarWashCompanyProfile, Startup } from '@/screens';
+import {
+  AllList,
+  CarWash,
+  CarWashCompanyProfile,
+  Payment,
+  Startup,
+} from '@/screens';
 import Form from '@/screens/Home/form/form';
 
 import BottomTabNavigator from './bottomTab/bottomTabs';
@@ -34,6 +40,7 @@ function ApplicationNavigator() {
             name={Paths.CompanyProfile}
           />
           <Stack.Screen component={Form} name={Paths.Form} />
+          <Stack.Screen component={Payment} name={Paths.Payment} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

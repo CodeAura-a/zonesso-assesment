@@ -6,7 +6,7 @@ import { SafeScreen } from '@/components/templates';
 export default function Post() {
   return (
     <SafeScreen>
-      <Text>home</Text>
+      <Text>Post</Text>
     </SafeScreen>
   );
 }

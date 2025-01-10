@@ -12,7 +12,7 @@ import useStyles from './styles';
 type ButtonProps = {
   variant?: 'primary' | 'outlined' | 'ghost';
   icon?: keyof typeof svgs;
-  iconStyle?: ViewStyle,
+  iconStyle?: ViewStyle;
   loading?: boolean;
   disabled?: boolean;
   onPress: () => void;
@@ -32,7 +32,7 @@ const GenericButton: React.FC<ButtonProps> = ({
   label,
   style,
   textVariant = 'button',
-  iconStyle
+  iconStyle,
 }) => {
   const styles = useStyles();
   const { colors, components, fonts, borders, backgrounds } = useTheme();
@@ -47,12 +47,6 @@ const GenericButton: React.FC<ButtonProps> = ({
           borders.w_1,
           pressed ? borders.gray100 : borders.danger500,
           pressed ? backgrounds.gray100 : backgrounds.danger100,
-        ];
-        break;
-      case 'ghost':
-        variantStyle = [
-          pressed ? backgrounds.danger100 : {},
-          { backgroundColor: "transparent" },
         ];
         break;
       default: // primary
@@ -71,38 +65,28 @@ const GenericButton: React.FC<ButtonProps> = ({
     ];
   };
 
-  const getTextStyle = ({
-    pressed,
-  }: {
-    pressed: boolean;
-  }): ViewStyle | undefined => {
-    if (disabled) {
-      return fonts.gray50;
-    }
-
-    switch (variant) {
-      case 'primary':
-        return fonts.white;
-      case 'ghost':
-      case 'outlined':
-        return pressed ? fonts.white : fonts.danger500;
-    }
-  };
-
   const renderContent = (pressed: boolean) => (
     <View style={styles.content}>
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'primary' ? colors.white : colors.danger100}
+          color={variant === 'primary' ? colors.white : colors.danger500}
         />
       ) : (
         <>
-            {icon && <ZonSvg name={icon} viewStyle={[styles.iconView, iconStyle]} />}
+          {icon && (
+            <ZonSvg name={icon} viewStyle={[styles.iconView, iconStyle]} />
+          )}
           <ZonText
             variant={textVariant}
             fontFamily={fontFamily}
-            style={getTextStyle({ pressed })}
+            color={
+              disabled
+                ? 'gray100'
+                : variant === 'primary'
+                  ? 'white'
+                  : 'danger500'
+            }
           >
             {label}
           </ZonText>
@@ -138,4 +122,3 @@ const GenericButton: React.FC<ButtonProps> = ({
 };
 
 export default GenericButton;
-

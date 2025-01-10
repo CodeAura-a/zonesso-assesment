@@ -8,7 +8,7 @@ import {
 
 import { useTheme } from '@/theme';
 
-import { ZonText } from '..';
+import { ZonText } from '../index';
 
 interface TextInputComponentProps extends TextInputProps {
   error?: boolean;
@@ -51,7 +51,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
     <View style={style}>
       {!noLabel ? (
         <ZonText
-          variant="sub"
+          variant="listHeader"
           color={!editable ? 'gray500' : 'black'}
           style={[gutters.marginBottom_8]}
         >

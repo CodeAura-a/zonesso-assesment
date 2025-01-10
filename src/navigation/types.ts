@@ -9,6 +9,7 @@ export type RootStackParamList = {
   [Paths.AllList]: { title: string };
   [Paths.CompanyProfile]: undefined;
   [Paths.Form]: { image: string; title: string; description: string };
+  [Paths.Payment]: undefined;
 };
 
 export type RootScreenProps<

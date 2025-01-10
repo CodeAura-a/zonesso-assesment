@@ -6,7 +6,7 @@ import { SafeScreen } from '@/components/templates';
 export default function Chat() {
   return (
     <SafeScreen>
-      <Text>home</Text>
+      <Text>Chats</Text>
     </SafeScreen>
   );
 }

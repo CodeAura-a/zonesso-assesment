@@ -1,14 +1,13 @@
-import { format } from 'path';
-import { title } from 'process';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { useTheme } from '@/theme';
 import { CARD_IMAGES } from '@/theme/assets/images';
 import { FormErrors } from '@/theme/types/common';
+import { Paths } from '@/navigation/paths';
 
 import {
   ZonButton,
@@ -17,19 +16,18 @@ import {
   ZonModal,
   ZonSvg,
   ZonText,
+  ZonTextAlert,
+  ZonTextInput,
 } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
 
-import {
-  handleChangeText,
-  height,
-  validateForm,
-  ValidationRules,
-} from '@/utils/common';
+import { handleChangeText, height, validateForm } from '@/utils/common';
 
 interface FormData {
   date: string;
-  selectLocation: object;
+  selectLocation: object | string;
+  vehicleList: [{ id: number; name: string; numberPlate: string }];
+  selectVehicle: object | string;
 }
 const vehicleList = [
   {
@@ -45,18 +43,28 @@ const vehicleList = [
 ];
 
 export default function Form() {
+  const route = useRoute().params;
   const { gutters, layout, backgrounds, borders } = useTheme();
   const navigation = useNavigation();
   const [openCalender, setOpenCalender] = useState(false);
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  console.log('route-----------', JSON.stringify(route, null, 2));
+
   const [state, setState] = useState<FormData>({
+    detail: {
+      title: route?.title,
+      description: route?.description,
+      image: route?.image,
+    },
     date: '',
     selectLocation: '',
     selectVehicle: '',
     vehicleList: vehicleList,
   });
 
-  const [erorrs, setErrors] = useState<FormErrors<FormData>>({
+  const [errors, setErrors] = useState<FormErrors<FormData>>({
     dateError: false,
     selectLocationError: false,
   });
@@ -65,11 +73,25 @@ export default function Form() {
     const formData: FormData = {
       date: state?.date,
       selectLocation: state?.selectLocation,
+      selectVehicle: state?.selectVehicle,
     };
 
     const errors = validateForm(formData);
     setErrors((prevState) => ({ ...prevState, ...errors }));
     return Object.keys(errors).length === 0;
+  };
+
+  const onSubmit = () => {
+    if (validateFormData()) {
+      navigation.navigate(Paths.Payment, {
+        title: state.detail.title,
+        desription: state.detail.description,
+        location: state.selectLocation.location,
+        image: state.detail.image,
+        vehical: state.selectVehicle,
+        date: state.date,
+      });
+    }
   };
 
   const onChange = React.useCallback((key: keyof FormData, value: string) => {
@@ -114,7 +136,7 @@ export default function Form() {
           />
         </Pressable>
         <ZonImage
-          source={CARD_IMAGES.FORM_IMAGE}
+          source={{ uri: route?.image }}
           style={{ width: '100%', height: height / 3.8 }}
           resizeMode="cover"
         />
@@ -124,10 +146,10 @@ export default function Form() {
           color="gray800"
           style={[gutters.marginTop_16, gutters.marginLeft_16]}
         >
-          Car Wash
+          {route?.title}
         </ZonText>
         <ZonText variant="sub" color="gray600" style={[gutters.marginLeft_16]}>
-          Car Washs sdfjlajfasjl
+          {route?.description}
         </ZonText>
         <View
           style={[
@@ -164,8 +186,11 @@ export default function Form() {
             variant="button"
             color="gray800"
             style={[gutters.marginLeft_16]}
+            fontFamily="bold"
           >
-            {state?.date || 'select Date'}
+            {state?.date
+              ? moment(state?.date).format('DD MMM YYYY-h:mm A')
+              : 'Select date'}
           </ZonText>
           <ZonSvg
             name="calendar"
@@ -177,6 +202,11 @@ export default function Form() {
             }}
           />
         </Pressable>
+        <ZonTextAlert
+          variant="error"
+          label="Please select date"
+          showAlert={errors.dateError}
+        />
         <ZonCalendar
           isVisible={openCalender}
           onClose={() => setOpenCalender(false)}
@@ -203,6 +233,11 @@ export default function Form() {
         >
           Please choose preferred location
         </ZonText>
+        <ZonTextAlert
+          variant="error"
+          label="Please select location"
+          showAlert={errors.selectLocationError}
+        />
         {locationList.map((item) => {
           return (
             <Pressable
@@ -259,6 +294,7 @@ export default function Form() {
             </Pressable>
           );
         })}
+
         <View
           style={[
             { height: 8 },
@@ -272,9 +308,14 @@ export default function Form() {
           color="gray800"
           style={[gutters.marginLeft_16]}
         >
-          Please choose preferred location
+          Please choose your vehicle
         </ZonText>
-        {vehicleList.map((item) => {
+        <ZonTextAlert
+          variant="error"
+          label="Please select vehicle"
+          showAlert={errors.selectVehicleError}
+        />
+        {state?.vehicleList.map((item) => {
           return (
             <Pressable
               key={item.id}
@@ -283,10 +324,10 @@ export default function Form() {
                 layout.justifyBetween,
                 layout.itemsCenter,
                 borders[
-                  state?.selectLocation.id === item.id ? 'danger300' : 'gray300'
+                  state?.selectVehicle.id === item.id ? 'danger300' : 'gray300'
                 ],
                 backgrounds[
-                  state?.selectLocation.id === item.id ? 'danger100' : 'white'
+                  state?.selectVehicle.id === item.id ? 'danger100' : 'white'
                 ],
                 borders.w_1,
                 gutters.padding_10,
@@ -295,7 +336,7 @@ export default function Form() {
                 borders.rounded_8,
               ]}
               onPress={() => {
-                onChange('selectLocation', item);
+                onChange('selectVehicle', item);
               }}
             >
               <View>
@@ -316,7 +357,7 @@ export default function Form() {
               </View>
               <ZonSvg
                 name={
-                  state?.selectLocation.id === item.id
+                  state?.selectVehicle.id === item.id
                     ? 'radio_button'
                     : 'black_ring'
                 }
@@ -332,116 +373,173 @@ export default function Form() {
         })}
         <ZonButton
           variant="outlined"
-          onPress={() => console.log('klkkkk')}
+          onPress={() => setIsVisible(true)}
           label="Add new vehicle"
-          style={{ width: '90%', alignSelf: 'center', marginVertical: 30 }}
+          style={{ width: '90%', alignSelf: 'center', marginVertical: 20 }}
+        />
+        <View
+          style={[
+            { height: 8 },
+            backgrounds.gray200,
+            gutters.marginVertical_20,
+          ]}
+        />
+        <ZonButton
+          onPress={onSubmit}
+          label="Continue"
+          style={{ width: '95%', alignSelf: 'center', marginVertical: 20 }}
         />
       </ScrollView>
+      <AddVehicle
+        isVisible={isVisible}
+        setVisible={setIsVisible}
+        setListState={setState}
+        listState={state}
+      />
     </SafeScreen>
   );
 }
 
-// const AddVehicle = ({
-//   setVisible,
-//   isVisible,
-//   issueId,
-//   setSuccessModal,
-//   queryClient,
-// }: {
-//   setVisible: (value: boolean) => void;
-//   isVisible: boolean;
-//   issueId: string;
-//   setSuccessModal: (value: boolean) => void;
-// }) => {
-//   const { gutters, layout, borders, backgrounds } = useTheme();
+interface nestedFormData {
+  vehicle: string;
+  numberPlate: string;
+}
 
-//   const [closeComment, setCloseComment] = useState('');
-//   const [errors, setErrors] = useState({ closeCommentError: false });
+const AddVehicle = ({
+  setVisible,
+  isVisible,
+  listState,
+  setListState,
+}: {
+  setVisible: (value: boolean) => void;
+  isVisible: boolean;
+  setListState?: any;
+  listState?: any;
+}) => {
+  const { gutters, layout, borders, backgrounds } = useTheme();
 
-//   const onCloseModal = () => setVisible(false);
+  const [loading, setLoading] = useState(false);
 
-//   const validateFormData = (): boolean => {
-//     const formData: Record<string, any> = {
-//       closeComment,
-//     };
+  const [state, setState] = useState<nestedFormData>({
+    vehicle: '',
+    numberPlate: '',
+  });
 
-//     const errors = validateForm(formData);
-//     setErrors((prevErrors) => ({ ...prevErrors, ...errors }));
-//     return Object.keys(errors).length === 0;
-//   };
+  const [errors, setErrors] = useState<FormErrors<nestedFormData>>({
+    vehicleError: false,
+    numberPlateError: false,
+  });
 
-//   const onSubmit = async () => {
-//     console.log(closeImage);
+  const onCloseModal = () => setVisible(false);
 
-//     if (validateFormData()) {
-//     }
-//   };
+  const validateFormData = (): boolean => {
+    const formData: Record<string, any> = {
+      vehicle: state?.vehicle,
+      numberPlate: state?.numberPlate,
+    };
 
-//   return (
-//     <ZonModal
-//       isVisible={isVisible}
-//       onClose={onCloseModal}
-//       variant={'bottom'}
-//       containerStyle={{ height: '80%' }}
-//       swipeThreshold={50}
-//     >
-//       <KeyboardAwareScrollView
-//         showsVerticalScrollIndicator={false}
-//         contentContainerStyle={{ flexGrow: 1, backgroundColor: 'Red' }}
-//         keyboardShouldPersistTaps="handled"
-//         keyboardOpeningTime={Number.MAX_SAFE_INTEGER}
-//       >
+    const errors = validateForm(formData);
+    setErrors((prevErrors) => ({ ...prevErrors, ...errors }));
+    return Object.keys(errors).length === 0;
+  };
 
-//         <KorInput
-//           variant="description"
-//           titleLabel={'Closing comment'}
-//           placeholder="Closing comment"
-//           value={closeComment}
-//           onChangeText={(text) => {
-//             setCloseComment(text);
-//             setErrors({ ...errors, closeCommentError: false });
-//           }}
-//           errorLabel="Please enter the close comment"
-//           error={errors?.closeCommentError}
-//         />
+  const onSubmit = async () => {
+    setLoading(true);
+    if (validateFormData()) {
+      const newId = listState.vehicleList.length + 1; // Simple incremen
+      const newVehicle = {
+        id: newId, // Auto-generated ID
+        name: state.vehicle, // Vehicle name from input
+        numberPlate: state.numberPlate, // Number plate from input
+      };
 
-//         <AddImage
-//           images={closeImage}
-//           setImages={setCloseImage}
-//           setVisible={setImageModal}
-//           visible={imageModal}
-//           // disabled={isEdit && disabledTypes.includes(route?.data?.type)}
-//         />
+      // Update the vehicleList with the new vehicle
+      setListState((prevState: any) => ({
+        ...prevState,
+        vehicleList: [...prevState.vehicleList, newVehicle], // Add the new vehicle
+      }));
 
-//         <View
-//           style={[
-//             layout.row,
-//             gutters.marginTop_40,
-//             gutters.gap_72,
-//             layout.absolute,
-//             layout.bottom0,
-//           ]}
-//         >
-//           <KorButton
-//             disabled={isPending}
-//             onPress={() => {
-//               onCloseModal();
-//             }}
-//             label={'Cancel'}
-//             variant="outlined"
-//             style={[layout.flex_1]}
-//           />
-//           <KorButton
-//             loading={isPending}
-//             disabled={isPending}
-//             onPress={() => {
-//               onSubmit();
-//             }}
-//             label={'Close'}
-//             style={[layout.flex_1, backgrounds.blue]}
-//           />
-//         </View>
-//       </KeyboardAwareScrollView>
-//     </Zon>
-//   );
-// };
+      setTimeout(() => {
+        // Set loading to false after 1.5 seconds
+        setLoading(false);
+        onCloseModal();
+      }, 2000);
+    } else {
+      setLoading(false);
+    }
+  };
+
+  const onChange = React.useCallback(
+    (key: keyof nestedFormData, value: string) => {
+      handleChangeText(setState, setErrors, key, value);
+    },
+    [],
+  );
+
+  return (
+    <ZonModal
+      isVisible={isVisible}
+      onClose={onCloseModal}
+      variant={'bottom'}
+      containerStyle={{ height: '60%' }}
+      swipeThreshold={50}
+    >
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, backgroundColor: 'Red' }}
+        keyboardShouldPersistTaps="handled"
+        keyboardOpeningTime={Number.MAX_SAFE_INTEGER}
+      >
+        <ZonTextInput
+          titleLabel={'Vehicle name'}
+          placeholder="vehicle name"
+          value={state?.vehicle}
+          onChangeText={(text) => {
+            onChange('vehicle', text);
+          }}
+          errorLabel="Please enter the vehicle name"
+          error={errors?.vehicleError}
+        />
+
+        <ZonTextInput
+          keyboardType="number-pad"
+          titleLabel={'Number plate'}
+          placeholder="vehicle name"
+          value={state?.numberPlate}
+          onChangeText={(text) => {
+            onChange('numberPlate', text);
+          }}
+          errorLabel="Please enter the number plate"
+          error={errors?.numberPlateError}
+          style={[gutters.marginTop_20]}
+        />
+        <View
+          style={[
+            layout.row,
+            gutters.marginTop_40,
+            gutters.gap_72,
+            layout.absolute,
+            { bottom: 30 },
+          ]}
+        >
+          <ZonButton
+            onPress={() => {
+              onCloseModal();
+            }}
+            label={'Cancel'}
+            variant="outlined"
+            style={[layout.flex_1, { height: 40 }]}
+          />
+          <ZonButton
+            loading={loading}
+            onPress={() => {
+              onSubmit();
+            }}
+            label={'Close'}
+            style={[layout.flex_1, { height: 40 }]}
+          />
+        </View>
+      </KeyboardAwareScrollView>
+    </ZonModal>
+  );
+};

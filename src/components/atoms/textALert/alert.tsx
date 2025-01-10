@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-import { useTheme } from '@/theme';
-
-import { ZonText } from '..';
+import { ZonText } from '../index';
 
 type props = {
   label: string;
@@ -15,13 +13,13 @@ type props = {
   style?: StyleProp<ViewStyle>;
 };
 export default function ZonTextAlert(props: props) {
-  const { label, iconName, showAlert, iconStyle, variant, style } = props;
-  const { colors, gutters, layout, borders } = useTheme();
+  const { label, showAlert, style } = props;
+
   return (
     <>
       {showAlert ? (
         <View style={{ ...styles.container, ...style }}>
-          <ZonText variant="sub" color="danger300">
+          <ZonText variant="sub" color="danger500">
             {label}
           </ZonText>
         </View>
@@ -36,5 +34,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 6,
     gap: 4,
+    marginLeft: 16,
   },
 });

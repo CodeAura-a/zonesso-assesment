@@ -10,7 +10,9 @@ import Modal, { ModalProps } from 'react-native-modal';
 
 import { useTheme } from '@/theme';
 
-import { ZonSvg } from '..';
+import { ZonSvg } from '../index';
+
+// import { ZonSvg } from '@/components/atoms';
 
 interface GenericModalProps extends Partial<ModalProps> {
   isVisible: boolean;
@@ -113,7 +115,7 @@ const ModalVariant: React.FC<GenericModalProps> = ({
                 ]}
                 onPress={onClose}
               >
-                <ZonSvg name="calendar" viewStyle={{}} />
+                <ZonSvg name="close" />
               </Pressable>
             </View>
           </Pressable>
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
   container: {
     width: '80%',
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 32,
     padding: 20,
     // paddingBottom: 30,
     shadowColor: '#000',

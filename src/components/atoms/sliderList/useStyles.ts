@@ -25,6 +25,7 @@ const useStyles = () => {
     image: {
       width: '100%' as const,
       height: 120,
+      borderRadius: 8,
     },
     cardContent: {
       ...gutters.marginLeft_8,

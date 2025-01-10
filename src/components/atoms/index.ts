@@ -11,3 +11,4 @@ export { default as LinearGradient } from './linerCompoenet/LinearGradientCompon
 export { default as ZonCalendar } from './calendar/calendar';
 export { default as ZonModal } from './modal/modal-variant';
 export { default as ZonTextAlert } from './textALert/alert';
+export { default as ZonTextInput } from './input/textInput-component';

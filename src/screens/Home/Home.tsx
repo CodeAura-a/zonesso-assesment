@@ -10,13 +10,13 @@ import { SliderList } from '@/components/atoms';
 import ImageVariant from '@/components/atoms/image/image-variant';
 import { SafeScreen } from '@/components/templates';
 
-import { LIST_DATA } from '@/utils/data';
+import { ABU_DHABI_LIST_DATA, LIST_DATA } from '@/utils/data';
 
 import CategoryGridComponent from './components/CategoryGridComponent';
 
 const sliderData = [
   { title: 'Top Showrooms', data: LIST_DATA },
-  { title: 'Featured Cars', data: LIST_DATA },
+  { title: 'Promotions', data: LIST_DATA },
   { title: 'New Arrivals', data: LIST_DATA },
   // You can add more sliders with different titles and data here
 ];
@@ -24,7 +24,7 @@ const sliderData = [
 export default function Home() {
   const navigation = useNavigation();
   return (
-    <SafeScreen style={{}} backButton={false}>
+    <SafeScreen location backButton={false} search>
       <FlashList
         data={[1]}
         renderItem={() => (
@@ -51,10 +51,17 @@ export default function Home() {
                 data={slider.data}
                 title={slider.title}
                 viewAll={() => navigation.navigate(Paths.CarWash as never)}
+                imagePress={() =>
+                  navigation.navigate(Paths.CompanyProfile as never)
+                }
+                LogoPress={() =>
+                  navigation.navigate(Paths.CompanyProfile as never)
+                }
               />
             ))}
           </>
         )}
+        estimatedItemSize={300}
         keyExtractor={() => 'banner'}
         showsVerticalScrollIndicator={false}
       />
