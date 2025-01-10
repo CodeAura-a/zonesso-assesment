@@ -535,7 +535,7 @@ const AddVehicle = ({
             onPress={() => {
               onSubmit();
             }}
-            label={'Close'}
+            label={'Add'}
             style={[layout.flex_1, { height: 40 }]}
           />
         </View>

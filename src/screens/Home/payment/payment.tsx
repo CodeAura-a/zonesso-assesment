@@ -79,7 +79,7 @@ export default function Payment() {
         />
         <View>
           <ZonText variant="button" fontFamily="bold">
-            Car Wash
+            {route?.title}
           </ZonText>
           <ZonText
             variant="button"
