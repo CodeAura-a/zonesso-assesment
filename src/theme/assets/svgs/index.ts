@@ -33,6 +33,7 @@ export { default as gray_heart } from './grey-heart.svg';
 export { default as red_location } from './red_location.svg';
 export { default as arrow_down } from './arrow_down.svg';
 export { default as red_heart } from './red-heart.svg';
+export { default as white_heart } from './white_heart.svg';
 
 export { default as calendar } from './calendar.svg';
 export { default as black_ring } from './black-ring.svg';

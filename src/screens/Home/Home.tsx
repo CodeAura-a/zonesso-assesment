@@ -10,7 +10,7 @@ import { SliderList } from '@/components/atoms';
 import ImageVariant from '@/components/atoms/image/image-variant';
 import { SafeScreen } from '@/components/templates';
 
-import { ABU_DHABI_LIST_DATA, LIST_DATA } from '@/utils/data';
+import { LIST_DATA } from '@/utils/data';
 
 import CategoryGridComponent from './components/CategoryGridComponent';
 

@@ -83,8 +83,8 @@ export default function AllList({ navigation }: any) {
           >
             <View style={[layout.row, gutters.gap_6]}>
               <LikeButton
-                isActive={selected.includes(item?.id)}
-                onPress={() => toggleSelection(item?.id)}
+              // isActive={selected.includes(item?.id)}
+              // onPress={() => toggleSelection(item?.id)}
               />
               <ShareButton />
             </View>

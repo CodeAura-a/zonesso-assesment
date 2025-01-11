@@ -34,11 +34,11 @@ export const LikeButton: React.FC<IconButtonProps> = ({
         style,
       ]}
     >
-      {isActive ? (
-        <ZonSvg name="red_heart" size={size} />
-      ) : (
-        <ZonSvg name="heart" size={size} />
-      )}
+      {/* {isActive ? ( */}
+      {/* // <ZonSvg name="red_heart" size={size} /> */}
+      {/* ) : ( */}
+      <ZonSvg name="white_heart" size={size} />
+      {/* )} */}
     </Pressable>
   );
 };

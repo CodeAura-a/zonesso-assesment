@@ -39,6 +39,11 @@ export default function CarWash() {
                 key={index}
                 data={slider.data}
                 title={slider.title}
+                imagePress={() =>
+                  navigation.navigate(Paths.AllList, {
+                    title: slider.title,
+                  })
+                }
                 viewAll={() =>
                   navigation.navigate(Paths.AllList, {
                     title: slider.title,
